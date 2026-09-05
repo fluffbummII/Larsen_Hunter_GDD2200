@@ -1,0 +1,11 @@
+Your total experience with Unity and programming
+- I only have last semester's experience in Unity, with the only other programming experience being Game Maker from my first college semester.
+
+The most complex thing you've accomplished in Unity.
+- The most complex thing I have done with Unity is using a Coroutine to have appearing dialogue in a game.
+
+Things you find fun about games or programming
+- I mostly enjoy goofing around and trying random things and combinations in games, like different silly loadouts in shooter games. Likewise, when I program, I like to design levels in games by mixing all the random ideas I have.
+
+Anything else you want me to know
+- I have a tight schedule with my two majors and work, so please do keep the course load lighter so I can actually accomplish things. I also kind of wish to be the producer of the group game the class makes.
