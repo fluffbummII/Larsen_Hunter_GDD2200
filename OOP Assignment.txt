@@ -1,0 +1,122 @@
+// Online C# compiler (editor) for free
+// Write and run C# online using this editor.
+
+using System;
+
+public class Game
+{
+// Constructor
+public Game(){
+}
+
+// Main kept as short as possible for simple code
+public static void Main(string[] args){
+    // Creates a new game
+    Game game = new Game();
+    // Creates new fresh Wizard and Fighter
+    Fighter fighter = new Fighter();
+    Wizard wizard = new Wizard();
+    // Starts the fighting code
+    game.fightItOut(fighter, wizard);
+}
+
+public void fightItOut(Player fighter, Player wizard){
+    // Tells us teh fighting started
+    Console.WriteLine("The battle begins!");
+    //While both players have HP the battle continues on loop
+    while (fighter.getHP() > 0 && wizard.getHP() > 0)
+    {
+        // Fighter attacks Wizard minimum 10 damage
+        fighter.randomDamage(10, fighter.getATK());
+        int fighterDamage = fighter.getATK();
+        // Take off the health from the Wizard
+        wizard.setHP(wizard.getHP() - fighterDamage);
+        // Sends message of the damage and how much health is left
+        Console.WriteLine("The fighter dealt " + fighterDamage + " damage to the wizard.");
+        Console.WriteLine("Wizard HP: " + wizard.getHP());
+        
+        // Check if the Wizard is dead then fighter wins
+        if (wizard.getHP() <= 0){
+            Console.WriteLine("Fighter won!");
+            //Just learned break, turns out the code keeps going without it
+            break;
+        }
+        // Wizard attacks Fighter minimum of 5 damage
+        wizard.randomDamage(5, wizard.getATK());
+        int wizardDamage = wizard.getATK();
+        // Take off the health from teh Fighter
+        fighter.setHP(fighter.getHP() - wizardDamage);
+        // Sends message of the damage and remaining health
+        Console.WriteLine("The wizard dealt " + wizardDamage + " damage to the fighter.");
+        Console.WriteLine("Fighter HP: " + fighter.getHP());
+        
+        // Check if tthe Fighter is dead then Wizard wins
+        if (fighter.getHP() <= 0){
+            Console.WriteLine("Wizard won!");
+            break;
+        }
+    }
+}
+
+}
+
+// Base Player class
+public abstract class Player{
+// Stats for the players
+private int HP;
+private int ATK;
+Random rnd = new Random();
+
+// Default constructor for all players
+public Player(){
+    //All players normally have 100HP and 25ATK
+    HP = 100;
+    ATK = 25;
+}
+
+// Getter for HP
+public int getHP(){
+    return HP;
+}
+// Setter for HP
+public void setHP(int new_HP){
+    HP = new_HP;
+}
+
+// Getter for ATK
+public int getATK()
+{
+    return ATK;
+}
+// Setter for ATK
+public void setATK(int new_ATK){
+    ATK = new_ATK;
+}
+
+// Creates a random attack value in a range using min and max
+public void randomDamage(int min_DMG, int max_DMG){
+    ATK = rnd.Next(min_DMG, max_DMG + 1);
+}
+// Special attack that I don't know what to do with yet
+public abstract void specialAttack();
+}
+
+// Fighter inherits everything from Player
+public class Fighter : Player{
+public override void specialAttack(){
+    {
+    setATK(45);
+    }
+     Console.WriteLine("To be defined later");
+}
+}
+
+// Wizard inherits everything from Player
+public class Wizard : Player{
+public override void specialAttack(){
+    {
+    setATK(50);
+    }
+    Console.WriteLine("To be defined later");
+}
+}
