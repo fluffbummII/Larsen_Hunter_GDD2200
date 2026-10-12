@@ -1,0 +1,144 @@
+using System;
+
+using System.Collections.Generic;
+
+// Abstract player class with all the base player stats and conditions 
+public abstract class player{
+    private int HP = 20;
+// Only poisoned matters for this assignment
+    bool isPoisoned = false;
+    bool isStone = false;
+    bool isUndead = false;
+
+// Get the players health
+    public int getHP(){
+        return HP;
+    }    
+// Set the players health to new value
+    public void setHP(int newHP){
+        HP = newHP;
+    }  
+// Check if under poisoned condition
+    public bool Poisoned(){
+        return isPoisoned;
+    }
+// Cured from poison!!
+    public void setPoisoned(){
+        isPoisoned = !isPoisoned;
+    }
+// Special attack to be defined by versions of player
+    public abstract void spcATK();
+    
+// Warrior class overrides player with its own health and attack 
+public class warrior:player
+{
+    public int getHP(){
+       return getHP();
+    }
+    public void setHP(int newHP){
+        setHP(newHP);
+    }
+    public override void spcATK(){
+        Console.WriteLine("Define Special Attack Later");
+    }
+}
+// Actual Game
+public class Game 
+{
+public static void Main(string[] args) {
+// List for the items in the inventory
+    List<Item> Inventory = new List<Item>();
+// Add 2 potions and an antidote to the list
+    Potion potion = new Potion();
+    AddItem(Inventory, potion);
+    
+    Potion potion2 = new Potion();
+    AddItem(Inventory, potion2);
+
+    Antidote antidote = new Antidote();
+    AddItem(Inventory, antidote);
+// Player class is now the warrior
+    warrior newPlayer = new warrior();
+
+// Display the items in the inventory with a name, and the amount
+    foreach(Item items in Inventory){
+        Console.WriteLine(items.name + " x" + items.amount);
+        items.ItemEffect(newPlayer);
+        
+    }
+}
+// How to add an item to the inventory list
+    public static void AddItem(List<Item> inventory, Item newItem){
+// When adding the same item just increase the amount don't double the name and inventory slots
+    foreach(Item item in inventory)
+    {
+        if(item.GetType() == newItem.GetType())
+        {
+            item.amount++;
+            return;
+        }
+    }
+
+    newItem.amount = 1;
+    inventory.Add(newItem);
+}
+}
+
+public abstract class Item
+{
+// Base item class stats, name, number of them, ID
+    public string name;
+    public int amount;
+    public int itemID;
+// Check if the item is being used
+    public bool isUsed;
+// Have some effect on the player
+    public abstract void ItemEffect(player play1);
+}
+
+public class Potion : Item
+{
+// Potion overrides the base item with new name, amount, and ID
+    public Potion()
+    {
+        name = "Potion";
+    }
+// Override base player status effect to whatever status the player is under now
+    public override void ItemEffect(player play1){
+// Display and make the potion have an effect of changing the players HP aka healing
+        Console.WriteLine("Players Current HP");
+        Console.WriteLine(play1.getHP());
+
+        int hp = play1.getHP();
+        hp = hp + 20;
+
+        play1.setHP(hp);
+// Yay the player is healed!!!
+        Console.WriteLine("Healed player");
+        Console.WriteLine(play1.getHP());
+    }
+}
+
+public class Antidote : Item
+{
+// Antidote overrriding the item class
+    public Antidote(){
+        name = "Antidote";
+    }
+
+    public override void ItemEffect(player play1){
+// For antidote to work the player must be poisoned, check the condition
+        if (play1.Poisoned()){
+            Console.WriteLine("Poisoned");
+
+            play1.setPoisoned();
+// If they were poisoned then yay they're cured!!!
+            Console.WriteLine("Poison Healed");
+        }else
+        {
+// Else cure the player of poison hurray!
+            Console.WriteLine("Not Poisoned");
+        }
+    }
+}
+}
